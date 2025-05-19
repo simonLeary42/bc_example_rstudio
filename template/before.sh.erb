@@ -7,3 +7,6 @@ port=$(find_port ${host})
 # Define a password and export it for RStudio authentication
 password="$(create_passwd 16)"
 export RSTUDIO_PASSWORD="${password}"
+
+# Define a CSRF (cross site request forgery) token to be added to HTML form and cookie
+csrf_token="$(create_passwd 32)"

@@ -46,6 +46,7 @@ cd "${HOME}"
 
 export TMPDIR="$(mktemp -d)"
 
+# https://docs.posit.co/ide/server-pro/admin/access_and_security/cookies.html
 mkdir -p "$TMPDIR/rstudio-server"
 python -c 'from uuid import uuid4; print(uuid4())' > "$TMPDIR/rstudio-server/secure-cookie-key"
 chmod 0600 "$TMPDIR/rstudio-server/secure-cookie-key"
@@ -59,6 +60,7 @@ singularity run -B "$TMPDIR:/tmp" "$RSTUDIO_SERVER_IMAGE" \
  --auth-none 0 \
  --auth-pam-helper-path "${RSTUDIO_AUTH}" \
  --auth-encrypt-password 0 \
- --rsession-path "${RSESSION_WRAPPER_FILE}"
+ --rsession-path "${RSESSION_WRAPPER_FILE}" \
+ --secure-cookie-key-file /tmp/secure-cookie-key
 
 echo 'Singularity as exited...'
